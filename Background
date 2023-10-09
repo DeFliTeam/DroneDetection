@@ -1,0 +1,229 @@
+**Abstract**
+
+Drones are widely used in the energy, construction, agriculture, transportation, warehousing,real estate and movie industries. Key applications include
+surveys, inspections, deliveries and cinematography. Withapproximately 70-80% of the global market share of commercial off-the-shelf drones, Da-Jiang Innovations
+(DJI), headquartered in Shenzhen, China, essentially monopolizes the drone market. As commercial-off-the-shelfdrone sales steadily rise, the Federal Aviation
+Administration has instituted regulations to protect the federal airspace. DJI has become a pioneer in developing remote identification technology in the form of drone ID
+(also known as AeroScope signals). Despite claims from the company touting its implementation of drone ID technology as “encrypted” yet later being proved incorrect for the
+claim. DeFli Network's Drone Detection program shows a methodology for obtaining drone signals from all leading manufacturers, including DJI, Parrot and Skydio as well as 
+any other manufacturer that is compliant with RemoteID configuration by virtue of listing their broadcast beacon with IEE 802.11. 
+
+The aim of a widespread drone detection network built on low cost SDR receivers and open-source software is to offer ground based users a cost effective methodology of tracking 
+drones without being forced to acquire the $20,000 DJI Aeroscope. The data received is also partitioned in to the DeFli UTM. 
+
+**Background to Drone ID** 
+
+Civilian unmanned aerial vehicles, also known asdrones, are commercial-off-the-shelf products that havegained popularity over the years. The Federal Aviation
+Administration estimates that commercial-off-the-shelf drone sales rose from 2.5 million in 2016 to 7 million in 2020. 
+
+The Federal Aviation Administration is charged by the Code of Federal Regulations to be the ultimate arbiter in civil aviation regulation. Specifically, the Federal
+Aviation Administration oversees Title 14, Chapter 1 in the Code of Federal Regulations, which has two parts that cover drones. Part 107 contains regulations that govern
+small drones. Part 89 contains remote identification requirements for small drones. 
+
+Due to the increased operation of drones, the Federal Aviation Administration has instituted regulations to protect the federal airspace. The regulations cover
+documented authorization, flight operating limitations and remote identification requirements. A key regulation is that, after September 16, 2023, drones that do not comply
+with the remote identification reporting requirements may not be operated in federal airspace. 
+
+Remote identification, which is implemented by drones broadcasting vehicle and flight data once every second, enables the Federal Aviation Administration, law
+enforcement and other federal agencies to properly identify vehicles and their ground stations. Remoteidentification of a drone is implemented using messages
+containing specific data elements that are emitted by the vehicle when it is turned on. The messages must be broadcasted once per second. 
+
+Table 1 shows the remote identification elements and performance requirements from Section 305 and Section 310 in Title 14, Chapter 1, Part 89 in the Code of Federal
+Regulations. The remote identification elements are prioritized so that aviation and law enforcement authorities can quickly and accurately identify persons
+who misuse drones.
+The drone serial number and session identifier are unique tags set by the manufacturer. Manufacturers mayincorporate the serial number or session identifier, or both,
+in broadcast messages. The longitude and latitude data points of the controller must be encoded cryptographicallybefore broadcasting. The controller altitude must be the
+most precise measurement reported; the measurement must have a margin of error no more than 15 feet. The timestamp in the message must be synchronized within
+one second with all other data elements from the time of broadcast. The broadcast message must also have some form of error correction embedded.
+The elements are emitted by an internal broadcasting module in the drone. However, if a manufacturer decides to create its own external broadcasting module, the module
+does not have to report controller location and altitude information. The Federal Aviation Administration finalauthority states that a drone may not take off if the
+elements in Table 1 are not included in its broadcast messages. 
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/T1QP3zH/Screenshot-from-2023-10-09-15-06-31.png" alt="Screenshot-from-2023-10-09-15-06-31" border="0"></a> 
+
+**DJI** 
+
+With approximately 70-80% of the global commercial off-the-shelf drone business, Da-Jiang Innovations (DJI), headquartered in Shenzhen, China, essentially monopolizes the drone market. DJI releases several
+new drone models every year. The models are typically used in three drone applications: video production, enterprise activities and agricultural solutions.
+A DJI drone currently employs one of two proprietary communications protocols, Enhanced Wi-Fi and OcuSync
+
+1. Enhanced Wi-Fi Protocol: The Enhanced Wi-Fi protocol is used by older DJI Spark and Mavic Air models. The protocol transmission range is limited to visual line of sight.
+
+2. OcuSync Protocol: The OcuSync protocol is used by the DJI Mavic series, Air series and Mini series of drones. This new DJI protocol, which leverages
+software-defined radio technology, has a protocol transmission range of approximately 2.5 miles.
+
+The Lightbridge protocol was the first protocol DJI implemented and was used in older DJI Phantom series, Inspire series and Matrice series of drones. 
+
+DJI also markets drone monitoring systems that leverage the remote identification functionality mandated by the Federal Aviation Administration to ensure that
+drones are operated safely. In 2017, DJI released AeroScope monitoring systems that can identify most DJI drones (Lightbridge, Enhanced Wi-Fi and OcuSync
+drones).
+
+The latest DJI AeroScope drone monitoring systems can identify up to 50 DJI drone models [4]. DJI markets these systems as ideal for placement at or near airports, prisons,
+nuclear power plants, government facilities and critical infrastructure assets. The RRP of these devices is close to $20,000 and it is therefore this industry that the DeFli Drone Detection Network 
+intends to disrupt. 
+
+A DJI AeroScope monitoring system captures and stores telemetry data of all the drones it monitors as well as their serial numbers and GPS data, return-to-home GPS
+data and controller (pilot) GPS data. The unique user identification code (UUID) associated with the purchaser of a drone is also recorded. DJI has confirmed that the
+UUID ties a drone pilot to a registered DJI user account. Thus, DJI can query UUIDs to obtain pilot names, email addresses, even credit card numbers and related
+data. Law enforcement agencies requesting UUID information may be granted personal identifiable information regarding the drone owner. 
+
+**Remote Identification on Advanced WiFi** 
+
+Department 13, a company specializing drone countermeasures, discovered operational details about drone remote identification packets by examining an accidental release of DJI’s Mavic Pro drone firmware. The
+discovery is documented in a white paper that provides the only publicly available information about DJI remote identification frames sent with Enhanced Wi-Fi drones
+(Department 13, Anatomy of DJI’s Drone Identification Implementation, White Paper, Canberra, Australia, 2017.).
+
+DJI drone remote identification packets are incorporated in IEEE 802.11 Wi-Fi beacon management frames. The 802.11 Wi-Fi beacon management frames are
+designed to announce the existence of vehicles (M. Gast, 802.11 Wireless Networks: The Definitive Guide, O’Reilly Media, Sebastopol, California, 2005). 
+
+Fig. 2 shows the 802.11 beacon management frame structure Enhanced Wi-Fi drones emit. The frame control field
+specifies the frame type and subtype; setting the type to 0 and subtype to 8 informs the network that the frame is a beacon. The device address, sender address and basic
+service set identifier (BSS ID) fields are arbitrary. The frame body contains various information elements. The information elements provide the network with detailed
+information about access points. The service set identifier (SSID) field, supported rates field and current channel field are included in the frame. 
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/s21BjD2/Screenshot-from-2023-10-09-15-14-51.png" alt="Screenshot-from-2023-10-09-15-14-51" border="0"></a> 
+
+Appended to an 802.11 Wi-Fi beacon management frame is a DJI drone payload. Fig. 3 discovered in the decompiled code of the ath6kl_usb.ko firmware
+kernel module shows the structure of the payload [8]. The kernel module directly controls the Atheros wireless network adapter in the drone. In the code snippet, the
+payload preamble is a unique series of eight bytes concatenated (via memcpy) to the flight_info packet.
+After the dji_ie_on parameter is set, the drone begins to emit a 76-byte remote identification packet via the Atheros wireless network adapter. 
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/2YDmdg9/Screenshot-from-2023-10-09-15-16-04.png" alt="Screenshot-from-2023-10-09-15-16-04" border="0"></a> 
+
+**Occusync Drone Identification** 
+
+In 2022, an open-source effort was initiated to demodulate DJI OcuSync drone ID signals (www.github.com/proto17/dji_droneid). The repository revealed that OcuSync drone IDs are loosely
+based on some Long Term Evolution (LTE) cellular standards. This means any software defined radio (SDR) capable of sampling up to 15,360,000 samples per second
+(the LTE sample rate) up to a bandwidth of 10 MHz cancapture OcuSync drone IDs.
+
+Fig. 4 shows a GNU Radio flow graph leveraging a LimeSDR to see DJI drone ID signals in real-time (via afosophor sink). Any SDR capable of sampling 32-bit
+floating point IQ data (.fc32 file) up to 15.35 MSPS can use this GNU Radio flow graph and capturing drone ID signals. Fig. 5 shows the waterfall output from the GNU
+radio flow graph with a drone ID highlighted. 
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/zf1kk4t/Screenshot-from-2023-10-09-15-18-46.png" alt="Screenshot-from-2023-10-09-15-18-46" border="0"></a> 
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/FBrPNwd/Screenshot-from-2023-10-09-15-19-11.png" alt="Screenshot-from-2023-10-09-15-19-11" border="0"></a> 
+
+With a capable SDR, a successful capture must be tuned to center frequencies broadcasted by drone ID signals. Table 2 shows center frequencies in the 2.4 GHz
+and 5.8 GHz frequency bands that drone IDs are found on.
+
+This data was collected by leaving several DJI Mavic models with the power on. The 2.4 GHz frequency band ranges from 2399.5 MHz to 2474.5 MHz, and the 5.8 GHz
+frequency band ranges from 5741.5 MHz to 5831.5 MHz. It was also discovered that even if a user forces the DJIOcuSync communications downlink to be 2.4 GHz or 5
+GHz with the DJI GO smartphone application, DJI drone ID signals do not adhere and continue to broadcast out-of-band from the communications link. 
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/fSDPv5n/Screenshot-from-2023-10-09-15-20-32.png" alt="Screenshot-from-2023-10-09-15-20-32" border="0"></a> 
+
+A signal broadcasts on a frequency until 12-20 drone IDs emit before hopping. Fig. 6 shows a sample DJI Mavic Pro drone ID signal. A drone ID signal is approximately
+600 milliseconds in duration. 
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/gZy7V79/Screenshot-from-2023-10-09-15-21-31.png" alt="Screenshot-from-2023-10-09-15-21-31" border="0"></a> 
+
+A drone ID signal contains nine OFDM (Orthogonal Frequency-Division Multiplexing) symbols. Sometimes, drone ID signals contain eight OFDM symbols. However,demodulation only needs eight OFDM symbols as the first
+symbol in a nine OFDM system can be discarded.
+The first and last OFDM symbols are sized 80 and the middle symbols are sized 72 (e.g., ([80, 72, 72, 72, 72, 72, 72, 72, 80]). Once captured, DJI drone ID signals can be demodulated using digital signal processing. The
+demodulation steps are provided in the dji_droneid GitHub repository and are the following
+
+1. Identifying the start of a drone ID
+2. Creating a low-pass bandwidth filter
+3. Applying a coarse frequency offset correction
+4. OFDM symbol extraction (sans cyclic prefixes)
+5. Measuring channel impulse rate
+6. Quantizing Quadrature Phase Shift Key (QPSK)into bits
+7. Descrambling bits
+8. Turbo decoder and rate matcher
+9. Deframing bytes 
+
+The demodulation steps are converted into Python. The proceeding algorithms in the DeFli DroneDetetction are outlined step by step in Pythonic pseudocode in this (repo). 
+
+**Drone Detection on DeFli** 
+
+*Ocusync Detection* 
+
+A DJI OcuSync detection system runs effectively using “cheap” SDRs (under $500) such as AirSpy R2's coupled with an Intel-based processor computer to
+process the Python script and turbo decoder program. 
+
+OcuSync drone ID demodulation steps and logic have already been discussed in (this) repo but monitoring a DJI drone on the fly requires real-time
+detection capabilities with reliable radio frequency throughput. Rapid frequency hopping on known center frequencies (via Table 2) is also necessary to maximize
+success rates. 
+
+Alg. 2 can be outfitted to include a dynamic cross correlation that is constantly scanning for drone IDs. The @njit decorator in Numba, a high-performance Python
+compiler, can aid in faster calculations and yields better performance benchmarks when applied to the cross correlation function.
+The tradeoff with low-cost SDRs (e.g., AIRSPY R2 ) is unreliable crystal oscillators which occasionally invoke frequency offsets. These offsets can result in failed
+demodulations. However, there are ways to calculate a frequency offset at any juncture and apply a correction toa capture. The best solution found for a AIRSPY R2 is
+using the CellSearch program in the LTE-Cell-Scanner GitHub repository (www.github.com/JiaoXianjun/LTE-Cell-Scanner). 
+
+Alg. 10 leverages the CellSearch program to ping nearby LTE bands (stored in lteBand) from a range of frequencies: a frequency minimum (freqMin) to a
+frequency maximum (freqMax). The program can measure the crystal frequency error of the LTE frequency (crystalCorrection). The crystalCorrection is then
+transformed into a ppm number with a simple equation. 
+
+Algorithm 10: Correction of Airspy R2 frequency offset.
+Input: freqBand: Nearby frequency band
+Output: ppm: HackRF crystal oscillator error
+lteBand ← {1: [2140, 2140.1]…103: [757.5, 757.6]}
+freqMin ← lteBand[freqBand][0]
+freqMax ← lteBand[freqBand][1]
+crystalCorrection ← CellSearch(freqMin, freqMax)
+ppm ← 1e6 × (1- crystalCorrection) 
+
+The ppm number can be inputted into the -C argument of the airspyr2_transfer command (which interfaces with the Airspy to receive radio frequency data) to
+correct the frequency offset: 
+
+airspyr2_transfer file.cs8 -f [CENTER_FREQUENCY]-s 1536000000 -C [PPM]  
+
+The last step is converting file.cs8, which is a collection of complex 8-bit signed integer samples, into IQ data. The conversion can be performed with the
+following code snippet:
+
+buffer = open(file.cs8, type=int8)
+buffer = buffer [::2] + 1j × buffer[1::2] 
+
+The DeFli Drone Detection device is built for OcuSync drone ID detection by Airmine Inc and consists of. 
+
+A Chewy Larkbox X (Intel N100), two Airspy R2's and two Altelix 2.4 GHz omni-directional antennas. 
+
+One Airspy hops to a different center frequency on the 2.4 GHz frequency band and another Airspy hops to a different
+center frequency on the 5.8 GHz frequency band. Each capture consists of 1,500,000 complex 8-bit signedintegers samples, which are enough samples to potentially
+contain a drone ID. 
+
+Fig. 13 shows the script output of a detected Mavic 2 drone. In this instance, a drone ID version 2 packet is picked up and properly decoded. The script prints out the
+raw bytes of the deframed drone ID and JSON data of the packet data points. The script properly parses the serial number, GPS coordinates of the drone, altitude, height,
+speeds, yaw, GPS accuracy (pilot GPS clock), GPS coordinates of the pilot, GPS coordinates of the return-to- home location and UUID. The serial number and UUID
+have been concealed for the sake of privacy. 
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/MDMwy2Y/Screenshot-from-2023-10-09-15-38-19.png" alt="Screenshot-from-2023-10-09-15-38-19" border="0"></a> 
+
+Fig. 14 shows the drone control panel web application built in Flask. The Flask application listens for JSON requests and displays nine detection attributes: model,
+serial number, UUID, altitude, height, yaw, drone location, pilot location and timestamp 
+
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/xmZPc1Y/Screenshot-from-2023-10-09-15-39-23.png" alt="Screenshot-from-2023-10-09-15-39-23" border="0"></a> 
+
+*Enhanced WiFi Detection* 
+
+A DJI Enhanced Wi-Fi detection system can be achieved by only using network adapters with monitor mode and custom clock rate capabilities.
+The Department 13 white paper revealed that DJI drones use Atheros chips to broadcast beacon frames that contain drone IDs. The beacon frames are emitted with
+a bandwidth of 5 MHz. This is typically not allowed for normal network interface cards; however, Atheros network interface cards are able to be clocked at half rate
+(10 MHz) or quarter rate (5 MHz) [2].
+
+DeFli Drone Detection Devices use both the Intel 8265 WIFi Card and the USB connected with SMA Output Panda (PAU06) 
+
+Both these  interface card can also be used by Kismet, a wireless network device detector and sniffer that operates on Wi-Fi interfaces. 
+
+The following command allows Kismet to scan Wi-Fi channel 1 through 177 (consisting both 2.4 GHz and 5.8 GHz frequencies) at a 5 MHz bandwidth: 
+
+kismet -c adapter:channels = “1W5, 2W5,
+3W5, 4W5, 5W5, 6W5, 7W5, 8W5, 9W5, 10W5,
+11W5, 12W5, 13W5, 14W5, 140W5, 149W5,
+153W5, 157W5, 161W5, 165W5, 169W5, 173W5,
+177W5” 
+
+The Kismet control panel allows users to filter Wi-Fi devices based upon MAC address, advertised SSID or beacon vendor tag. The best way to detect DJI drones is by filtering individualized 802.11 vendor tags. IEEE keeps
+an open-source record of all registered company 802.11 vendor tags. DJI vendor tags are the following:
+• 60-60-1F
+• 34-D2-62
+• 48-1C-B9 
+
+By extension, Kismet supports non-DJI drone detection such as Parrot. Parrot vendor tags are the following:
+• 00-12-1C
+• 90-03-B7
+• A0-14-3D
+• 00-26-7E
+
