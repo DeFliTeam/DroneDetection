@@ -1,0 +1,17 @@
+The Kismet control panel allows users to filter Wi-Fi devices based upon MAC address, advertised SSID or
+beacon vendor tag. 
+The best way to detect drones is by filtering individualized 802.11 vendor tags. IEEE keeps an open-source record of all registered company 802.11 vendor tags. Some notable ones are listed below: 
+
+**DJI** 
+
+• 60-60-1F
+• 34-D2-62
+• 48-1C-B9 
+
+**Parrot** 
+
+• 00-12-1C
+• 90-03-B7
+• A0-14-3D
+• 00-26-7E 
+
