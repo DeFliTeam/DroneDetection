@@ -1,0 +1,132 @@
+
+Install RTL-SDR  
+
+Step 1
+
+sudo apt-get install git
+sudo apt-get install cmake
+sudo apt-get install build-essential   
+
+sudo apt install pkg-config
+
+Step 2
+
+Retrieve, build and compile the RTL2832U Osmocom drivers from the source (this is all one command).
+
+
+sudo apt install pkg-config 
+
+sudo apt install libusb-1.0-0 
+
+git clone git://git.osmocom.org/rtl-sdr.git 
+
+cd rtl-sdr 
+
+mkdir build 
+
+cd build 
+
+cmake .. 
+
+sudo make install 
+
+sudo ldconfig 
+
+sudo cp ../rtl-sdr.rules /etc/udev/rules.d/
+
+Step 3
+
+Black List Drivers 
+
+cd /etc/modprobe.d 
+
+sudo nano blacklist-rtl.conf 
+
+Add this line to the file blacklist dvb_usb_rtl28xxu 
+
+sudo reboot
+Install GQRX
+
+sudo apt install gnuradio gqrx-sdr 
+
+You can launch from CLI with command “gqrx” or search within you Ubuntu Desktop
+Install GPREDICT
+
+Step 1- sudo apt-get update 
+
+Step 2- sudo apt-get -y install gpredict
+
+Configure
+
+NOTE THIS REQUIRES A MONITOR
+
+Step 1- Obtain TCP Port from GQRZ 
+
+Click on the tools icon within GQRX and find your TCP Listen Port
+
+Step 2- Add Network Connection 
+
+Click the icon with the two computers in, it will go dark when active
+
+Step 3- Create Interface on GPredict 
+
+Open GPredict and go to edit > preferences > interface
+
+Step 4- Add Radio 
+
+Within the interfaces “radio” section click “add new”. Change the following details: 
+
+    Name- Input Your UUID 
+
+    Port- Change this to the port obtained in Step 1 and click ok
+
+Step 5- Create Ground Station and module
+
+Click “File > Add Module”. Then click the plus icon to create a new ground station. ENsure the name matches the UUID and the lat, lon and altitude match those in your DeFli wallet. Select your closest weather station and then press “ok”. 
+
+In the module tab as pictured below, move satellites listed below in to the right hand box, give your module a name and ensure the ground station you just selected is showing in the Ground Station tab. 
+
+Finally go to edit > update TLE > choose from network 
+
+     NOAA 15, 18, 19 
+
+    ISS
+
+    CAS4A / CAS4B
+
+    Max Valier Sat
+
+    OPS-SAT 
+
+    LUSAT 
+
+Step 6- Radio Module 
+
+Click the button in the top right hand corner and from the menu option select “radio control” 
+
+The output screen will look like this
+
+On the right hand side ensure that Settings 1. Device is showing your UUID. Then click “engage”. 
+
+On the left hand side under target select a satellite and press “track”. 
+
+Navigate back to GQRX module and turn “squelch” to 105 dBi as per the image below
+
+Finally, navigate back to GPredict and from the top right menu that you selected “radio control” from, click “autotrack”.
+
+Step 7- Send your data 
+
+Navigate back to GQRX and go to the network tab of the audio settings menu. You will be met with this box
+
+Change the UDP host to the IP Address of your Raspberry Pi. 
+
+Then navigate back to the front page and press the small network button located left to the audio recording button, see the red marking on the screenshot below.
+
+You can verify you are receiving the signal by using command 
+nc -l -u 7355 
+
+This will take the form of lots of funny symbols on your terminal. 
+
+Finally send this data to us using command 
+
+sudo socat -T 10 UDP4-LISTEN:7355,reuseaddr,fork UDP4:44.52.11.28:4911
